@@ -1,5 +1,5 @@
 #include "log.hpp"
-#include "../buildconf.h"
+#include "buildconf.h"
 #ifndef LOG_LOCATION
 #define LOG_LOCATION "log.txt"
 #endif

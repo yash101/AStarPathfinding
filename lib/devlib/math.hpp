@@ -1,22 +1,17 @@
 #ifndef MATH_HPP
 #define MATH_HPP
+
 #include <cmath>
 #include <iostream>
-#ifndef PI
-#define PI 3.14159256
-#endif
-#define DegToRadConstant PI / 180.f
-#define RadToDevConstant 180.f / PI
-#include "compat.hpp"
-#ifdef CXX11_SUPPORTED
+
+#ifdef __cpp_lambdas
 #include <functional>
 #endif
-//Shoud we dynamically calculate PI at program launch? Pretty useless!
-#ifdef CALCULATE_PI_DYNAMIC
-#ifndef CALCULATE_PI_DYNAMIC_PRECISION
-#define CALCULATE_PI_DYNAMIC_PRECISION  100000
+
+#ifndef PI
+#define PI 3.14159265158979399070078575295639211617526598274707794189453125
 #endif
-#endif
+
 namespace dev
 {
     //Trigonometric conversion from radians to degrees
@@ -87,7 +82,7 @@ namespace dev
     }
 
 //This will only work with C++11+ (std::function())
-#ifdef CXX11_SUPPORTED
+#ifdef __cpp_lambdas
     template<typename FPT> FPT summation(int start, int end, std::function<FPT(int iteration)> funct)
     {
         FPT outcome = (FPT) 0;
@@ -109,14 +104,9 @@ namespace dev
     }
 #endif
 
-#ifdef CALCULATE_PI_DYNAMIC
-    const static long double pi = dev::piCalc<long double>(100000);
-#else
-    //Sorry, I like to get kinda retarded-accurate lol! This number was calculated in 32.1 minutes by the
-    //dev::piCalc() function!
-    const static long double pi = 3.14159265158979399070078575295639211617526598274707794189453125;
-#endif
+    const static long double pi = PI;
 
+#ifdef __cpp_lambdas
     template<typename FPA> FPA sin(FPA traj)
     {
         //Calculate PI!!! :D
@@ -139,5 +129,6 @@ namespace dev
     template<typename FPA> FPA csc(FPA traj) { return (FPA) 1.0 / dev::sin<FPA>(traj); }
     template<typename FPA> FPA sec(FPA traj) { return (FPA) 1.0 / dev::cos<FPA>(traj); }
     template<typename FPA> FPA cot(FPA traj) { return (FPA) 1.0 / dev::tan<FPA>(traj); }
+#endif
 }
 #endif // MATH_HPP

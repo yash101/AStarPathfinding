@@ -29,10 +29,10 @@ namespace dev
         template<typename Type1, typename Type2> Vector(dev::Point<Type1> pt1, dev::Point<Type2> pt2)
             { _x = pt2.getX() - pt1.getX(); _y = pt2.getY() - pt1.getY(); }
         //Copy constructors
-        template<typename Type> Vector(const dev::Vector<Type>& vec) { _x = vec.getX(); _y = vec.getY(); }
+        template<typename Type> Vector(dev::Vector<Type>& vec) { _x = vec.getX(); _y = vec.getY(); }
         template<typename Type> Vector& operator=(const Vector<Type>& vec) { _x = vec.getX(); _y = vec.getY(); }
         //Move constructor
-        template<typename Type> Vector(dev::Vector<Type>&& vec) { _x = vec.getX(); _y = vec.getY(); vec.setX(0), vec.setY(0); }
+//        template<typename Type> Vector(dev::Vector<Type>&& vec) { _x = vec.getX(); _y = vec.getY(); vec.setX(0), vec.setY(0); }
 
         ////Logic operators
         template<typename Type> bool operator==(dev::Vector<Type> vec) { return _x == vec.getX() && _y == vec.getY(); }
