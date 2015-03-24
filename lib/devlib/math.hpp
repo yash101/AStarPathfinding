@@ -130,5 +130,15 @@ namespace dev
     template<typename FPA> FPA sec(FPA traj) { return (FPA) 1.0 / dev::cos<FPA>(traj); }
     template<typename FPA> FPA cot(FPA traj) { return (FPA) 1.0 / dev::tan<FPA>(traj); }
 #endif
+
+    template<typename T> T pow(T num, size_t exp)
+    {
+        T numo = (T) 1.f;
+        for(size_t i = 0; i < exp; i++)
+        {
+            numo *= num;
+        }
+        return numo;
+    }
 }
 #endif // MATH_HPP

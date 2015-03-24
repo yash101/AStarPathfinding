@@ -5,19 +5,22 @@
 #include <cstring>
 #include <sstream>
 #include "point.hpp"
+#include "math.hpp"
 namespace dev
 {
     template<typename T> class Vector
     {
     private:
-        T _x;
-        T _y;
         dev::Vector<T> getVector() { return dev::Vector<T>(_y, _y); }
     public:
+        T _x;
+        T _y;
+        T& x() { return _x; }
+        T& y() { return _y; }
         ////Object access
         //Get/set OOP programming stuffs
-        T getX() { return _x; }
-        T getY() { return _y; }
+        T getX() const { return _x; }
+        T getY() const { return _y; }
         template<typename Type> void setX(Type type) { _x = type; }
         template<typename Type> void setY(Type type) { _y = type; }
 
@@ -29,13 +32,13 @@ namespace dev
         template<typename Type1, typename Type2> Vector(dev::Point<Type1> pt1, dev::Point<Type2> pt2)
             { _x = pt2.getX() - pt1.getX(); _y = pt2.getY() - pt1.getY(); }
         //Copy constructors
-        template<typename Type> Vector(dev::Vector<Type>& vec) { _x = vec.getX(); _y = vec.getY(); }
-        template<typename Type> Vector& operator=(const Vector<Type>& vec) { _x = vec.getX(); _y = vec.getY(); }
+        template<typename Type> Vector(const dev::Vector<Type>& vec) { _x = (T) vec.getX(); _y = (T) vec.getY(); }
+        template<typename Type> Vector& operator=(const Vector<Type>& vec) { _x = vec.getX(); _y = vec.getY(); return *this; }
         //Move constructor
 //        template<typename Type> Vector(dev::Vector<Type>&& vec) { _x = vec.getX(); _y = vec.getY(); vec.setX(0), vec.setY(0); }
 
         ////Logic operators
-        template<typename Type> bool operator==(dev::Vector<Type> vec) { return _x == vec.getX() && _y == vec.getY(); }
+//        template<typename Type> bool operator==(dev::Vector<Type> vec) { return _x == vec.getX() && _y == vec.getY(); }
         template<typename Type> bool operator!=(dev::Vector<Type> vec) { return !(_x == vec.getX() && _y == vec.getY()); }
 
 
@@ -102,6 +105,11 @@ namespace dev
             }
         }
     };
+
+    template<typename T, typename U> bool operator==(dev::Vector<T> a, dev::Vector<U> b)
+    {
+        return a.getX() == b.getX() && a.getY() == b.getY();
+    }
 
     //Some typedef's for typical vector types. Just to make coding a bit simpler to understand
     typedef dev::Vector<float> Vec2f;
